@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import math
 from collections import deque
 
 class RpsState():
@@ -16,7 +16,7 @@ class RpsState():
     rps_recognize_thres = 10 # frame
     rps_map = {"rock": 0, "paper": 0, "scissors": 0}
 
-    def __init__():
+    def __init__(self):
         pass
 
     def update_hand_data(self, hand):
@@ -36,15 +36,15 @@ class RpsState():
         # if all of
         if all([angle > self.rock_finger_hand_angle for angle in hand_data]):
             # count as rock
-            self.rps_queue.append(rps_arr[0])
+            self.rps_queue.append(self.rps_arr[0])
         elif all([angle < self.paper_finger_hand_angle for angle in hand_data]):
             # count as paper
-            self.rps_queue.append(rps_arr[1])
+            self.rps_queue.append(self.rps_arr[1])
         # it's important to recognize scissors after rock, paper
         # because rock, paper are easy to detect
         elif hand_data[0] < self.scissors_finger_hand_angle and hand_data[1] < self.scissors_finger_hand_angle:
             # if index and middle finger is open, count as scissors
-            self.rps_queue.append(rps_arr[2])
+            self.rps_queue.append(self.rps_arr[2])
 
     def get_rps(self):
         # according to our preliminary investigation, rps is performed during 90ms (around 5-10frame)

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import math
+
 class RockState():
     """
     Store hand data and return whether it's rock or not
