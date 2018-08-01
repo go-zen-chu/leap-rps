@@ -13,6 +13,7 @@ import Leap
 from Leap import Vector
 
 class RpsListener(Leap.Listener):
+    logger = None
     finger_names = ['thumb', 'index', 'middle', 'ring', 'pinky']
     bone_names = ['Metacarpal', 'Proximal', 'Intermediate', 'Distal']
     state_names = ['STATE_INVALID', 'STATE_START', 'STATE_UPDATE', 'STATE_END']
@@ -23,17 +24,24 @@ class RpsListener(Leap.Listener):
     rps_state = None
 
     def on_init(self, controller):
-        print("Initialized")
+        if self.logger != None:
+            self.logger.info("Initialized")
 
     def on_connect(self, controller):
-        print("Connected")
+        if self.logger != None:
+            self.logger.info("Connected")
 
     def on_disconnect(self, controller):
-        # Note: not dispatched when running in a debugger.
-        print("Disconnected")
+        if self.logger != None:
+            # Note: not dispatched when running in a debugger.
+            self.logger.info("Disconnected")
 
     def on_exit(self, controller):
-        print("Exited")
+        if self.logger != None:
+            self.logger.info("Exited")
+
+    def set_logger(self, logger):
+        self.logger = logger
 
     def get_hand_data(self, hand):
         # heuristic way
@@ -81,13 +89,13 @@ class RpsListener(Leap.Listener):
             return
         frame = controller.frame()
         if len(frame.hands) == 0:
-            print("No data in this frame")
+            self.logger.info("No data in this frame")
             return
         # use first hand
         hand = frame.hands[0]
         # they do not contain valid tracking data and do not correspond to a physical entity
         if hand.is_valid == False:
-            print("Not valid hand")
+            self.logger.info("Not valid hand")
             return
         # store hand data to rock state
         if self.rock_state != None:

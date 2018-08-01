@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
 import sys
 import time
 sys.path.insert(0, "./leap") # load leap motion lib
 import Leap
 from rps_listener import RpsListener
 from text2speech import text2speech
+from logging import getLogger, DEBUG, StreamHandler
+
+rps_file_name = 'rps.txt'
 
 def print_speech(msg):
     text2speech(msg)
@@ -46,21 +50,37 @@ def rps_process(listener):
 
     msg = "じゃんけん"
     print_speech(msg)
-    time.sleep(0.5)
-    
+    time.sleep(0.3)
+
     msg = "ほい"
     print_speech(msg)
     rps = rps_state.get_rps()
     print(rps_state.rps_queue)
-    print_speech(rps)
+    print(rps)
+    # write result to file
+    with open(rps_file_name,'w') as f:
+        f.write(rps)
+    # print_speech(rps)
 
     time.sleep(1)
-
+    # rps
+    if os.path.exists(rps_file_name):
+        os.remove(rps_file_name)
     # 停止
     listener.stop_measure()
 
 def main():
+    # setup logger
+    logger = getLogger(__name__)
+    logger.setLevel(DEBUG)
+    stream_handler = StreamHandler()
+    stream_handler.setLevel(DEBUG)
+    logger.addHandler(stream_handler)
+    logger.propagate = False
+
+    # setup leap listener
     listener = RpsListener()
+    listener.set_logger(logger)
     controller = Leap.Controller()
     controller.add_listener(listener)
     # MVP
