@@ -10,14 +10,15 @@ class RpsState():
     rps_arr = ["rock", "paper", "scissors"]
     rps_queue_len = 8 # save past 8 frame in queue
     rps_queue = deque(["rock"] * 8, 8) # default is rock
-    rock_finger_hand_angle = 95 # higher than this
+    rock_finger_hand_angle = 85 # higher than this
     paper_finger_hand_angle = 60 # lower than this
     scissors_finger_hand_angle = 60 # lower than this
     rps_recognize_thres = 10 # frame
     rps_map = {"rock": 0, "paper": 0, "scissors": 0}
+    logger = None
 
-    def __init__(self):
-        pass
+    def __init__(self, logger):
+        self.logger = logger
 
     def update_hand_data(self, hand):
         # 0: index, 1: middle, 2: ring, 3: pinky
@@ -33,6 +34,8 @@ class RpsState():
             if angle_norm_fng > 90:
                 angle_hand_fng = angle_hand_fng * -1
             hand_data[fng.type - 1] = angle_hand_fng
+        # self.logger.info(hand_data)
+
         # if all of
         if all([angle > self.rock_finger_hand_angle for angle in hand_data]):
             # count as rock

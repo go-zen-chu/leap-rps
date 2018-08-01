@@ -33,7 +33,7 @@ def rps_prepare(listener):
     # 測定
     listener.start_measure()
     rock_state = listener.start_rock_check()
-    time.sleep(0.8)
+    time.sleep(1)
     # グーを認識できているか？
     return rock_state.is_rock_state()
 
@@ -42,7 +42,7 @@ def rps_process(listener):
         # could not recognize rock state. try again
         msg = "正しく認識できませんでした。もう一度おねがいします"
         print_speech(msg)
-        time.sleep(5)
+        time.sleep(3)
     # 最初はグーまでできた
     listener.stop_rock_check()
     # start prediction
@@ -50,7 +50,7 @@ def rps_process(listener):
 
     msg = "じゃんけん"
     print_speech(msg)
-    time.sleep(0.3)
+    time.sleep(0.7)
 
     msg = "ほい"
     print_speech(msg)

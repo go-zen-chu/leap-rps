@@ -63,14 +63,14 @@ class RpsListener(Leap.Listener):
         self.is_measuring = True
 
     def start_rock_check(self):
-        self.rock_state = RockState()
+        self.rock_state = RockState(self.logger)
         return self.rock_state
 
     def stop_rock_check(self):
         self.rock_state = None
 
     def start_rps_recognition(self):
-        self.rps_state = RpsState()
+        self.rps_state = RpsState(self.logger)
         return self.rps_state
 
     def stop_rps_recognition(self):

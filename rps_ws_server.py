@@ -16,6 +16,7 @@ class RpsWsServer:
     rps_status = 'null'
     server = None
     logger = None
+    rps_win_dict = {"rock": "paper", "paper": "scissors", "scissors": "rock"}
 
     def __init__(self, logger):
         # handle signal for stopping thread
@@ -39,10 +40,12 @@ class RpsWsServer:
                     # 初回しか送らない
                     if self.rps_status != result:
                         self.rps_status = result
-                        server.send_message_to_all(result)
+                        win_rps = self.rps_win_dict[result]
+                        server.send_message_to_all(win_rps)
+                        print("result : {}, to win : {}".format(result, win_rps))
             else:
                 self.rps_status = 'null'
-            print(self.rps_status)
+            #print(self.rps_status)
             time.sleep(0.01) # wait 10ms
         print('bye')
         return # finish thread process

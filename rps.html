@@ -1,0 +1,29 @@
+<html>
+<head>
+
+</head>
+<body>
+  <h2>電拳 DENKEN</h2>
+  <img id="rpsImg" width="600px"/>
+  <script>
+  addEventListener('DOMContentLoaded', () => {
+    const wsHost = `ws://127.0.0.1:9090`;
+    const ws = new WebSocket(wsHost);
+    const rpsImg = document.querySelector('img#rpsImg');
+
+    const msgHandler = (msg) => {
+        console.log(msg.data);
+        // if rps
+        if (["rock", "paper", "scissors"].indexOf(msg.data) >= 0) {
+          rpsImg.src = "./img/" + msg.data + ".png"
+          setTimeout(() => {
+            rpsImg.src = "";
+          }, 3000);
+        }
+    };
+
+    ws.addEventListener('message', msgHandler);
+  });
+  </script>
+</body>
+</html>
