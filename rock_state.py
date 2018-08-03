@@ -27,7 +27,7 @@ class RockState():
         for fng in hand.fingers:
             angle_hand_fng = hand_direction.angle_to(fng.direction) * 180 / math.pi
             hand_data[fng.type] = angle_hand_fng
-        self.logger.info(hand_data)
+        #self.logger.info(hand_data)
 
         # check angle without thumb data
         if all([angle > self.finger_hand_angle for angle in hand_data[1:]]):

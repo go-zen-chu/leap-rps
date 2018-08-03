@@ -4,7 +4,8 @@
 </head>
 <body>
   <h2>電拳 DENKEN</h2>
-  <img id="rpsImg" width="600px"/>
+  <img id="rpsImg" width="600px" src="./img/ques.png"/>
+
   <script>
   addEventListener('DOMContentLoaded', () => {
     const wsHost = `ws://127.0.0.1:9090`;
@@ -17,11 +18,10 @@
         if (["rock", "paper", "scissors"].indexOf(msg.data) >= 0) {
           rpsImg.src = "./img/" + msg.data + ".png"
           setTimeout(() => {
-            rpsImg.src = "";
+            rpsImg.src = "./img/ques.png";
           }, 3000);
         }
     };
-
     ws.addEventListener('message', msgHandler);
   });
   </script>

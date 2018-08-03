@@ -89,7 +89,7 @@ class RpsListener(Leap.Listener):
             return
         frame = controller.frame()
         if len(frame.hands) == 0:
-            self.logger.info("No data in this frame")
+            #self.logger.info("No data in this frame")
             return
         # use first hand
         hand = frame.hands[0]
